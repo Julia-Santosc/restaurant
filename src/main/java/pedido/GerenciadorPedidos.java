@@ -1,7 +1,10 @@
 package pedido;
 
+import lombok.ToString;
+
 import java.util.HashMap;
 
+@ToString
 public class GerenciadorPedidos {
     private HashMap<Integer, Pedido> pedidos = new HashMap<>();
     private int contadorPedidos = 1;

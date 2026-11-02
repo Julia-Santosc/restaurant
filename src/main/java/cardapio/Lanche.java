@@ -1,7 +1,9 @@
 package cardapio;
 
-public class
-Lanche {
+import lombok.ToString;
+
+@ToString
+public class Lanche {
     private String nome;
     private double preco;
 
@@ -33,6 +35,5 @@ Lanche {
 
         this.preco = preco;
     }
-
 }
 
