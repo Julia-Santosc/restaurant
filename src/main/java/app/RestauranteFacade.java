@@ -39,4 +39,8 @@ public class RestauranteFacade {
     public double calcularTotalDoDia() {
         return gerenciadorPedidos.calcularTotalDoDia();
     }
+
+    public Pedido buscarPedido(int idPedido){
+        return gerenciadorPedidos.buscarPedido(idPedido);
+    }
 }

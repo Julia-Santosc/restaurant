@@ -62,20 +62,36 @@ public class Main {
         lerTodosItens(novoPedido);
         menu.exibirPedido(novoPedido);
     }
+    
+    private static void abrirSubMenuModificacao() {
+        int opcaoEscolhida = menu.lerSubMenuDeModificacao();
+        
+        while (opcaoEscolhida != 0) {
+            switch (opcaoEscolhida) {
+                case 1 -> System.out.println(1);
+                case 2 -> System.out.println(2);
+                case 3 -> System.out.println(3);
+                default -> throw new IllegalArgumentException("Opção inválida.");
+            }
+
+            opcaoEscolhida = menu.lerSubMenuDeModificacao();
+        }
+    }
 
     public static void main(String[] args) {
-        int opcaoMenuPrincipal = menu.exibirMenuPrincipal();
+        int opcaoMenuPrincipal = menu.lerOpcaoMenuPrincipal();
 
         while (opcaoMenuPrincipal != 0) {
             switch (opcaoMenuPrincipal) {
                 case 1 -> registrarNovoPedido();
                 case 2 -> menu.exibirPedidosDoDia(restaurante.listarPedidos());
                 case 3 -> menu.exibirFechamentoRestaurante(restaurante.calcularTotalDoDia());
+                case 4 -> abrirSubMenuModificacao();
                 default -> throw new IllegalArgumentException("Opção inválida.");
             }
 
             menu.irParaMenuPrincipal();
-            opcaoMenuPrincipal = menu.exibirMenuPrincipal();
+            opcaoMenuPrincipal = menu.lerOpcaoMenuPrincipal();
         };
 
         menu.sairDoMenuConsole();

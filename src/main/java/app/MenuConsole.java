@@ -9,11 +9,33 @@ import java.util.Scanner;
 public class MenuConsole {
     private final Scanner sc = new Scanner(System.in);
 
+    private void exibirMenuPrincipal() {
+        System.out.println("=== MENU PRINCIPAL ===");
+        System.out.println("1 - Registrar novo pedido");
+        System.out.println("2 - Listar pedidos do dia");
+        System.out.println("3 - Fechar restaurante");
+        System.out.println("4 - Modificar pedido");
+        System.out.println("0 - Sair");
+        System.out.print("\nDigite a opção desejada: ");
+    }
+
     private void exibirOpcoesLanches() {
+        System.out.println("\n=== CARDÁPIO ===");
         System.out.println("1 - X-Burguer (R$ 16,00)");
         System.out.println("2 - X-Salada (R$ 18,00)");
         System.out.println("3 - X-Bacon (R$ 22,00)");
         System.out.println("0 - Finalizar Pedido");
+        System.out.print("Digite a opcao desejada: ");
+    }
+
+    private void exibirIngredientesLanche() {
+        System.out.println("\nIngredientes: ");
+        System.out.println("1 - Queijo");
+        System.out.println("2 - Alface");
+        System.out.println("3 - Tomate");
+        System.out.println("4 - Cebola");
+        System.out.println("0 - Sair");
+        System.out.print("Digite a opção desejada: ");
     }
 
     private void exibirAdicionaisLanche() {
@@ -21,65 +43,62 @@ public class MenuConsole {
         System.out.println("1 - Cheddar");
         System.out.println("2 - Bacon extra");
         System.out.println("0 - Nenhum / terminar");
+        System.out.print("Digite o adicional desejado: ");
     }
 
-    private void exibirIngredientesLanche(){
-        System.out.println("\nIngredientes: ");
-        System.out.println("1 - Queijo");
-        System.out.println("2 - Alface");
-        System.out.println("3 - Tomate");
-        System.out.println("4 - Cebola");
-        System.out.println("0 - Sair");
+    private void exibirSubMenuDeModificacao(){
+        System.out.println("\n=== MODIFICAR PEDIDO ===");
+        System.out.println("1 - Acrescentar item");
+        System.out.println("2 - Remover item");
+        System.out.println("3 - Cancelar pedido");
+        System.out.println("0 - Voltar");
+        System.out.print("Digite a opção desejada: ");
     }
 
-    public int lerIngredientesLanche(){
-        exibirIngredientesLanche();
-        System.out.println("Digite a opcao desejada: ");
-
-        int opcaoIngrediente = sc.nextInt();
+    public int lerOpcaoMenuPrincipal() {
+        exibirMenuPrincipal();
+        int opcaoEscolhida = sc.nextInt();
         sc.nextLine();
-                return opcaoIngrediente;
+
+        return opcaoEscolhida;
     }
 
     public int lerOpcaoLanche() {
         exibirOpcoesLanches();
-        System.out.print("Digite a opção desejada: ");
-
         int opcaoLanche = sc.nextInt();
         sc.nextLine();
 
         return opcaoLanche;
     }
 
-    public int lerAdicionaisLanche(){
-        exibirAdicionaisLanche();
-        System.out.print("Digite o adicional desejado: ");
+    public int lerIngredientesLanche() {
+        exibirIngredientesLanche();
+        int opcaoIngrediente = sc.nextInt();
+        sc.nextLine();
 
+        return opcaoIngrediente;
+    }
+
+    public int lerAdicionaisLanche() {
+        exibirAdicionaisLanche();
         int adicionalEscolhido = sc.nextInt();
         sc.nextLine();
 
         return adicionalEscolhido;
     }
 
-    public String lerNomeCliente() {
-        System.out.print("Digite seu nome: ");
-        String nome = sc.nextLine();
-
-        return nome;
-    }
-
-    public int exibirMenuPrincipal() {
-        System.out.println("=== RESTAURANTE ===");
-        System.out.println("1 - Registrar novo pedido");
-        System.out.println("2 - Listar pedidos do dia");
-        System.out.println("3 - Fechar restaurante");
-        System.out.println("0 - Sair");
-        System.out.print("\nDigite a opção desejada: ");
-
-        int opcaoEscolhida = sc.nextInt();
+    public int lerSubMenuDeModificacao(){
+        exibirSubMenuDeModificacao();
+        int modificacaoEscolhida = sc.nextInt();
         sc.nextLine();
 
-        return opcaoEscolhida;
+        return modificacaoEscolhida;
+    }
+
+    public String lerNomeCliente() {
+        System.out.print("Digite seu nome: ");
+
+        return sc.nextLine();
     }
 
     public void exibirPedido(Pedido pedido) {
@@ -92,7 +111,7 @@ public class MenuConsole {
         largura = Math.max(largura, "Total:".length());
 
         String formatoItem = "     - %-" + largura + "s  R$ %6.2f%n";
-        String formatoTotal = "     %-" + (largura + 2) + "s  R$ %6.2f%n%n";
+        String formatoTotal = "     %-" + (largura + 2) + "s  R$ %6.2f%n";
 
         for (ItemCardapio item : pedido.getItens()) {
             System.out.printf(formatoItem, item.getDescricao(), item.getPreco());
@@ -104,7 +123,7 @@ public class MenuConsole {
 
     public void exibirPedidosDoDia(Collection<Pedido> pedidosDoDia) {
         if (pedidosDoDia.isEmpty()) {
-            System.out.println("\nNENHUM PEDIDO REGISTRADO HOJE\n");
+            System.out.println("\nNENHUM PEDIDO REGISTRADO HOJE");
             return;
         }
 
@@ -114,7 +133,7 @@ public class MenuConsole {
 
     public void exibirFechamentoRestaurante(Double totalDosPedidos) {
         System.out.println("\n=== TOTAL VENDIDO ===");
-        System.out.printf("    R$ %.2f %n%n", totalDosPedidos);
+        System.out.printf("    R$ %.2f %n", totalDosPedidos);
     }
 
     public void sairDoMenuConsole() {
@@ -123,7 +142,7 @@ public class MenuConsole {
     }
 
     public void irParaMenuPrincipal() {
-        System.out.println("=== RETORNANDO AO MENU PRINCIPAL... ===\n");
+        System.out.println("\n=== RETORNANDO AO MENU PRINCIPAL... ===\n");
 
         try {
             Thread.sleep(1000);
@@ -131,7 +150,5 @@ public class MenuConsole {
             throw new RuntimeException(e);
         }
     }
-
-
 }
 
