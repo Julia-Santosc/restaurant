@@ -11,6 +11,7 @@ public class Pedido {
     private int idPedido;
     private String nomeCliente;
     private ArrayList<ItemCardapio> itens = new ArrayList<>();
+
     public Pedido(int idPedido, String nomeCliente) {
         this.idPedido = idPedido;
         setNomeCliente(nomeCliente);

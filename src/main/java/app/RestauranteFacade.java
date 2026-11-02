@@ -1,7 +1,6 @@
 package app;
 
 import cardapio.ItemCardapio;
-import cardapio.Lanche;
 import cardapio.LancheFactory;
 import pedido.GerenciadorPedidos;
 import pedido.Pedido;
@@ -26,9 +25,9 @@ public class RestauranteFacade {
         };
 
         ItemCardapio lanche = switch (numeroDoLanche) {
-            case 1 -> LancheFactory.xburguer();
-            case 2 -> LancheFactory.xsalada();
-            case 3 -> LancheFactory.xbacon();
+            case 1 -> LancheFactory.xBurguer();
+            case 2 -> LancheFactory.xSalada();
+            case 3 -> LancheFactory.xBacon();
             default -> throw new IllegalArgumentException("Item selecionado não existe.");
         };
 
