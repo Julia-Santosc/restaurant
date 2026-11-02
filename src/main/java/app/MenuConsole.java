@@ -1,5 +1,6 @@
 package app;
 
+import cardapio.ItemCardapio;
 import pedido.Pedido;
 
 import java.util.Collection;
@@ -67,12 +68,21 @@ public class MenuConsole {
     public void exibirPedido(Pedido pedido) {
         System.out.printf("--- PEDIDO #%d - %s ---%n", pedido.getIdPedido(), pedido.getNomeCliente());
         System.out.println("Itens:");
-        pedido.getItens().forEach((lanche) -> {
-            System.out.printf("     - %-15s R$ %6.2f%n", lanche.getDescricao(), lanche.getPreco());
-        });
+        int largura = pedido.getItens().stream()
+                .mapToInt(item -> item.getDescricao().length())
+                .max()
+                .orElse(0);
+        largura = Math.max(largura, "Total:".length());
 
-        System.out.println("  " + "-".repeat(33));
-        System.out.printf("     %-17s R$ %6.2f%n%n", "Total:", pedido.calcularTotal());
+        String formatoItem = "     - %-" + largura + "s  R$ %6.2f%n";
+        String formatoTotal = "     %-" + (largura + 2) + "s  R$ %6.2f%n%n";
+
+        for (ItemCardapio item : pedido.getItens()) {
+            System.out.printf(formatoItem, item.getDescricao(), item.getPreco());
+        }
+
+        System.out.println("     " + "-".repeat(largura + 13));
+        System.out.printf(formatoTotal, "Total:", pedido.calcularTotal());
     }
 
     public void exibirPedidosDoDia(Collection<Pedido> pedidosDoDia) {
@@ -95,7 +105,7 @@ public class MenuConsole {
         sc.close();
     }
 
-    public void irMenuPrincipal() {
+    public void irParaMenuPrincipal() {
         System.out.println("=== RETORNANDO AO MENU PRINCIPAL... ===\n");
 
         try {

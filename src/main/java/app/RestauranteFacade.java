@@ -5,7 +5,7 @@ import cardapio.LancheFactory;
 import pedido.GerenciadorPedidos;
 import pedido.Pedido;
 
-import java.util.HashMap;
+import java.util.Collection;
 
 public class RestauranteFacade {
     private final GerenciadorPedidos gerenciadorPedidos;
@@ -31,8 +31,8 @@ public class RestauranteFacade {
         pedido.adicionarItem(item);
     }
 
-    public HashMap<Integer, Pedido> listarPedidos() {
-        return gerenciadorPedidos.getPedidos();
+    public Collection<Pedido> listarPedidos() {
+        return gerenciadorPedidos.getPedidos().values();
     }
 
     public double calcularTotalDoDia() {

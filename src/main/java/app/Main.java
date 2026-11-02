@@ -10,67 +10,57 @@ public class Main {
     private static final MenuConsole menu = new MenuConsole();
 
     private static ItemCardapio incluirAdicionais(ItemCardapio lanche) {
-        int adicionalEscolhido;
-        ItemCardapio lanchePosAdicionais;
+        int adicionalEscolhido = menu.lerAdicionaisLanche();
 
-        do {
-            adicionalEscolhido = menu.lerAdicionaisLanche();
-
-            lanchePosAdicionais = switch (adicionalEscolhido) {
-                case 0 -> lanche;
+        while (adicionalEscolhido != 0) {
+            lanche = switch (adicionalEscolhido) {
                 case 1 -> new ComCheddar(lanche);
                 case 2 -> new ComBaconExtra(lanche);
                 default -> throw new IllegalArgumentException("Adicional nao existe");
             };
-        } while (adicionalEscolhido != 0);
 
-        return lanchePosAdicionais;
+            adicionalEscolhido = menu.lerAdicionaisLanche();
+        }
+
+        return lanche;
     }
 
     private static void lerTodosItens(Pedido novoPedido) {
-        int opcaoLanche;
+        int opcaoLanche = menu.lerOpcaoLanche();
 
-        do {
-            opcaoLanche = menu.lerOpcaoLanche();
+        while (opcaoLanche != 0) {
             ItemCardapio lanche = restaurante.criarLanche(opcaoLanche);
-
-            if (opcaoLanche != 0) {
-                lanche = incluirAdicionais(lanche);
-            }
-
+            lanche = incluirAdicionais(lanche);
             restaurante.adicionarItemAoPedido(novoPedido, lanche);
-        } while (opcaoLanche != 0);
+
+            opcaoLanche = menu.lerOpcaoLanche();
+        }
+    }
+
+    private static void registrarNovoPedido() {
+        String nomeCliente = menu.lerNomeCliente();
+        Pedido novoPedido = restaurante.criarNovoPedido(nomeCliente);
+
+        lerTodosItens(novoPedido);
+        menu.exibirPedido(novoPedido);
     }
 
     public static void main(String[] args) {
-        int opcaoMenuPrincipal;
+        int opcaoMenuPrincipal = menu.exibirMenuPrincipal();
 
-        do {
-            opcaoMenuPrincipal = menu.exibirMenuPrincipal();
+        while (opcaoMenuPrincipal != 0) {
             switch (opcaoMenuPrincipal) {
-                case 1:
-                    String nomeCliente = menu.lerNomeCliente();
-                    Pedido novoPedido = restaurante.criarNovoPedido(nomeCliente);
-
-                    lerTodosItens(novoPedido);
-                    menu.exibirPedido(novoPedido);
-                    menu.irMenuPrincipal();
-                    break;
-                case 2:
-                    menu.exibirPedidosDoDia(restaurante.listarPedidos().values());
-                    menu.irMenuPrincipal();
-                    break;
-                case 3:
-                    menu.exibirFechamentoRestaurante(restaurante.calcularTotalDoDia());
-                    menu.irMenuPrincipal();
-                    break;
-                case 0:
-                    menu.sairDoMenuConsole();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Opção inválida.");
+                case 1 -> registrarNovoPedido();
+                case 2 -> menu.exibirPedidosDoDia(restaurante.listarPedidos());
+                case 3 -> menu.exibirFechamentoRestaurante(restaurante.calcularTotalDoDia());
+                default -> throw new IllegalArgumentException("Opção inválida.");
             }
-        } while (opcaoMenuPrincipal != 0);
+
+            menu.irParaMenuPrincipal();
+            opcaoMenuPrincipal = menu.exibirMenuPrincipal();
+        };
+
+        menu.sairDoMenuConsole();
     }
 }
 
