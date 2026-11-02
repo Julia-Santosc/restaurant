@@ -1,6 +1,9 @@
 package app;
 
+import cardapio.ComBaconExtra;
+import cardapio.ComCheddar;
 import cardapio.ItemCardapio;
+import cardapio.Lanche;
 import pedido.Pedido;
 
 import java.util.Collection;
@@ -148,6 +151,73 @@ public class MenuConsole {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void registrarNovoPedido(RestauranteFacade restaurante) {
+        String nomeCliente = lerNomeCliente();
+        Pedido novoPedido = restaurante.criarNovoPedido(nomeCliente);
+
+        lerTodosItens(restaurante, novoPedido);
+        exibirPedido(novoPedido);
+    }
+
+    public void abrirSubMenuModificacao() {
+        int opcaoEscolhida = lerSubMenuDeModificacao();
+
+        while (opcaoEscolhida != 0) {
+            switch (opcaoEscolhida) {
+                case 1 -> System.out.println(1);
+                case 2 -> System.out.println(2);
+                case 3 -> System.out.println(3);
+                default -> throw new IllegalArgumentException("Opção inválida.");
+            }
+
+            opcaoEscolhida = lerSubMenuDeModificacao();
+        }
+    }
+
+    private ItemCardapio incluirAdicionais(ItemCardapio lanche) {
+        int adicionalEscolhido = lerAdicionaisLanche();
+
+        while (adicionalEscolhido != 0) {
+            lanche = switch (adicionalEscolhido) {
+                case 1 -> new ComCheddar(lanche);
+                case 2 -> new ComBaconExtra(lanche);
+                default -> throw new IllegalArgumentException("Adicional nao existe");
+            };
+
+            adicionalEscolhido = lerAdicionaisLanche();
+        }
+
+        return lanche;
+    }
+
+    private void retirarIngredientes(Lanche lanche) {
+        int ingredienteEscolhido = lerIngredientesLanche();
+
+        while (ingredienteEscolhido != 0) {
+            switch (ingredienteEscolhido) {
+                case 1 -> lanche.setQueijo(false);
+                case 2 -> lanche.setAlface(false);
+                case 3 -> lanche.setTomate(false);
+                case 4 -> lanche.setCebola(false);
+                default -> throw new IllegalArgumentException("Ingrediente nao existe");
+            };
+            ingredienteEscolhido = lerIngredientesLanche();
+        }
+    }
+
+    private void lerTodosItens(RestauranteFacade restaurante, Pedido novoPedido) {
+        int opcaoLanche = lerOpcaoLanche();
+
+        while (opcaoLanche != 0) {
+            Lanche lanche = restaurante.criarLanche(opcaoLanche);
+            retirarIngredientes(lanche);
+            ItemCardapio lancheFinalizado = incluirAdicionais(lanche);
+            restaurante.adicionarItemAoPedido(novoPedido, lancheFinalizado);
+
+            opcaoLanche = lerOpcaoLanche();
         }
     }
 }
