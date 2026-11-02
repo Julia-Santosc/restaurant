@@ -18,7 +18,7 @@ public class Lanche implements ItemCardapio {
 
     public void setNome(String nome) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("O nome nao pode ser nulo ou vazio.");
+            throw new IllegalArgumentException("O nome não pode ser nulo nem vazio.");
         }
 
         this.nome = nome;

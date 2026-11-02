@@ -29,7 +29,7 @@ public class RestauranteFacade {
             case 1 -> LancheFactory.xburguer();
             case 2 -> LancheFactory.xsalada();
             case 3 -> LancheFactory.xbacon();
-            default -> throw new IllegalArgumentException("Item selecionado nao existe");
+            default -> throw new IllegalArgumentException("Item selecionado não existe.");
         };
 
         pedido.adicionarItem(lanche);

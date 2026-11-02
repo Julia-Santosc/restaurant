@@ -41,7 +41,7 @@ public class Main {
                     menu.sairDoMenuConsole();
                     break;
                 default:
-                    throw new IllegalArgumentException("Opcao Invalida");
+                    throw new IllegalArgumentException("Opção inválida.");
             }
         } while (opcaoMenuPrincipal != 0);
     }

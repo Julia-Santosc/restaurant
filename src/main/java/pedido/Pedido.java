@@ -38,7 +38,7 @@ public class Pedido {
 
     public void setNomeCliente(String nomeCliente) {
         if (nomeCliente == null || nomeCliente.isBlank()){
-            throw new IllegalArgumentException("Nome do cliente nao pode ser vazio nem nulo.");
+            throw new IllegalArgumentException("O nome do cliente não pode ser vazio nem nulo.");
         }
 
         this.nomeCliente = nomeCliente;

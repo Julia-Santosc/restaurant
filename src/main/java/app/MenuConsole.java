@@ -17,7 +17,7 @@ public class MenuConsole {
 
     public int lerOpcaoLanche() {
         exibirOpcoesLanches();
-        System.out.println("Digite a opcao desejada: ");
+        System.out.println("Digite a opção desejada: ");
 
         int opcaoLanche = sc.nextInt();
         sc.nextLine();
@@ -38,7 +38,7 @@ public class MenuConsole {
         System.out.println("2 - Listar pedidos do dia");
         System.out.println("3 - Fechar restaurante");
         System.out.println("0 - Sair");
-        System.out.print("Digite a opcao desejada: ");
+        System.out.print("Digite a opção desejada: ");
 
         int opcaoEscolhida = sc.nextInt();
         sc.nextLine();
@@ -48,7 +48,7 @@ public class MenuConsole {
 
     public void exibirPedido(Pedido pedido) {
         System.out.printf("--- PEDIDO #%d - %s ---%n", pedido.getIdPedido(), pedido.getNomeCliente());
-        System.out.println("Itens: ");
+        System.out.println("Itens:");
         pedido.getItens().forEach((lanche) -> {
             System.out.printf("     - %-15s R$ %6.2f%n", lanche.getDescricao(), lanche.getPreco());
         });
