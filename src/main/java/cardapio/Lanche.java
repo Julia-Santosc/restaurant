@@ -18,6 +18,8 @@ Lanche {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("O nome nao pode ser nulo ou vazio.");
         }
+
+        this.nome = nome;
     }
 
     public double getPreco() {
@@ -25,10 +27,11 @@ Lanche {
     }
 
     public void setPreco(double preco) {
-        if (preco > 0) {
+        if (preco <= 0) {
             throw new IllegalArgumentException("O valor não pode ser negativo. Valor informado: " + preco);
-
         }
+
+        this.preco = preco;
     }
 
 }

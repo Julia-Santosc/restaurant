@@ -22,7 +22,6 @@ public class MenuConsole {
     }
 
     public void exibirPedido(){
-        System.out.println("Seu pedido: "){
-        }
+        System.out.println("Seu pedido: ");
     }
 }
