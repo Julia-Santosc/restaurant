@@ -3,7 +3,7 @@ package cardapio;
 import lombok.ToString;
 
 @ToString
-public class Lanche {
+public class Lanche implements ItemCardapio {
     private String nome;
     private double preco;
 
@@ -12,7 +12,7 @@ public class Lanche {
         setPreco(preco);
     }
 
-    public String getNome() {
+    public String getDescricao() {
         return nome;
     }
 

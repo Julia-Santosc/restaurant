@@ -50,8 +50,8 @@ public class MenuConsole {
     public void exibirPedido(Pedido pedido) {
         System.out.printf("--- PEDIDO #%d - %s ---%n", pedido.getIdPedido(), pedido.getNomeCliente());
         System.out.println("Itens: ");
-        pedido.getItens().stream().forEach((Lanche lanche) -> {
-            System.out.printf("     - %-15s R$ %6.2f%n", lanche.getNome(), lanche.getPreco());
+        pedido.getItens().forEach((lanche) -> {
+            System.out.printf("     - %-15s R$ %6.2f%n", lanche.getDescricao(), lanche.getPreco());
         });
 
         System.out.println("  " + "-".repeat(33));

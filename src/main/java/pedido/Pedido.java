@@ -1,5 +1,6 @@
 package pedido;
 
+import cardapio.ItemCardapio;
 import cardapio.Lanche;
 import lombok.ToString;
 
@@ -11,25 +12,24 @@ public class Pedido {
 
     private int idPedido;
     private String nomeCliente;
-    private ArrayList<Lanche> itens = new ArrayList<>();
-
+    private ArrayList<ItemCardapio> itens = new ArrayList<>();
     public Pedido(int idPedido, String nomeCliente) {
         this.idPedido = idPedido;
         setNomeCliente(nomeCliente);
     }
 
-    public void adicionarItem(Lanche lanche){
-      itens.add(lanche);
+    public void adicionarItem(ItemCardapio item){
+      itens.add(item);
     }
 
-    public ArrayList<Lanche> getItens() {
+    public ArrayList<ItemCardapio> getItens() {
         return itens;
     }
 
     public double calcularTotal() {
         double valorTotal = 0;
-        for (Lanche lanche : itens) {
-            valorTotal += lanche.getPreco();
+        for (ItemCardapio item : itens) {
+            valorTotal += item.getPreco();
         }
         return valorTotal;
     }
