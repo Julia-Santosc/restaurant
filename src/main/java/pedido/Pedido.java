@@ -11,15 +11,12 @@ public class Pedido {
     private String nomeCliente;
     private ArrayList<Lanche> itens = new ArrayList<>();
 
-    public Pedido(int numero, String nomeCliente) {
-        this.idPedido = numero;
-
-        if (nomeCliente == null || nomeCliente.isBlank()){
-            throw new IllegalArgumentException("Nome do cliente nao pode ser vazio nem nulo.");
-        }
+    public Pedido(int idPedido, String nomeCliente) {
+        this.idPedido = idPedido;
+        setNomeCliente(nomeCliente);
     }
 
-    void adicionarItem(Lanche lanche){
+    public void adicionarItem(Lanche lanche){
       itens.add(lanche);
     }
 
@@ -27,7 +24,7 @@ public class Pedido {
         return itens;
     }
 
-    double calcularTotal() {
+    public double calcularTotal() {
         double valorTotal = 0;
         for (Lanche lanche : itens) {
             valorTotal += lanche.getPreco();
@@ -37,5 +34,17 @@ public class Pedido {
 
     public int getIdPedido() {
         return idPedido;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        if (nomeCliente == null || nomeCliente.isBlank()){
+            throw new IllegalArgumentException("Nome do cliente nao pode ser vazio nem nulo.");
+        }
+
+        this.nomeCliente = nomeCliente;
+    }
+
+    public String getNomeCliente(){
+        return nomeCliente;
     }
 }
