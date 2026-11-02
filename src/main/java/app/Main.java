@@ -1,11 +1,5 @@
 package app;
 
-import cardapio.ComBaconExtra;
-import cardapio.ComCheddar;
-import cardapio.ItemCardapio;
-import cardapio.Lanche;
-import pedido.Pedido;
-
 public class Main {
     private static final RestauranteFacade restaurante = new RestauranteFacade();
     private static final MenuConsole menu = new MenuConsole();
@@ -18,7 +12,7 @@ public class Main {
                 case 1 -> menu.registrarNovoPedido(restaurante);
                 case 2 -> menu.exibirPedidosDoDia(restaurante.listarPedidos());
                 case 3 -> menu.exibirFechamentoRestaurante(restaurante.calcularTotalDoDia());
-                case 4 -> menu.abrirSubMenuModificacao();
+                case 4 -> menu.buscarPedidoParaModificacao(restaurante);
                 default -> throw new IllegalArgumentException("Opção inválida.");
             }
 
@@ -29,4 +23,3 @@ public class Main {
         menu.sairDoMenuConsole();
     }
 }
-

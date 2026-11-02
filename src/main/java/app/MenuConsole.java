@@ -105,7 +105,7 @@ public class MenuConsole {
     }
 
     public void exibirPedido(Pedido pedido) {
-        System.out.printf("--- PEDIDO #%d - %s ---%n", pedido.getIdPedido(), pedido.getNomeCliente());
+        System.out.printf("%n--- PEDIDO #%d - %s ---%n", pedido.getIdPedido(), pedido.getNomeCliente());
         System.out.println("Itens:");
         int largura = pedido.getItens().stream()
                 .mapToInt(item -> item.getDescricao().length())
@@ -158,21 +158,23 @@ public class MenuConsole {
         String nomeCliente = lerNomeCliente();
         Pedido novoPedido = restaurante.criarNovoPedido(nomeCliente);
 
-        lerTodosItens(restaurante, novoPedido);
+        adicionarItensAoPedido(restaurante, novoPedido);
         exibirPedido(novoPedido);
     }
 
-    public void abrirSubMenuModificacao() {
+    public void abrirSubMenuModificacao(RestauranteFacade restaurante, Pedido pedido) {
         int opcaoEscolhida = lerSubMenuDeModificacao();
 
         while (opcaoEscolhida != 0) {
             switch (opcaoEscolhida) {
-                case 1 -> System.out.println(1);
+                case 1 -> adicionarItensAoPedido(restaurante, pedido);
                 case 2 -> System.out.println(2);
                 case 3 -> System.out.println(3);
                 default -> throw new IllegalArgumentException("Opção inválida.");
             }
 
+            System.out.println("\n=== PEDIDO ATUALIZADO ===");
+            exibirPedido(pedido);
             opcaoEscolhida = lerSubMenuDeModificacao();
         }
     }
@@ -208,7 +210,7 @@ public class MenuConsole {
         }
     }
 
-    private void lerTodosItens(RestauranteFacade restaurante, Pedido novoPedido) {
+    private void adicionarItensAoPedido(RestauranteFacade restaurante, Pedido novoPedido) {
         int opcaoLanche = lerOpcaoLanche();
 
         while (opcaoLanche != 0) {
@@ -220,5 +222,19 @@ public class MenuConsole {
             opcaoLanche = lerOpcaoLanche();
         }
     }
-}
 
+    public void buscarPedidoParaModificacao(RestauranteFacade restaurante) {
+        System.out.print("Digite o número do pedido que deseja modificar: ");
+        int idPedido = sc.nextInt();
+        sc.nextLine();
+
+        Pedido pedido = restaurante.buscarPedido(idPedido);
+        if (pedido == null) {
+            System.out.println("Pedido não encontrado.");
+            return;
+        }
+
+        exibirPedido(pedido);
+        abrirSubMenuModificacao(restaurante, pedido);
+    }
+}
