@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Scanner;
 
 public class MenuConsole {
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     private void exibirOpcoesLanches() {
         System.out.println("1 - X-Burguer (R$ 16,00)");
@@ -15,9 +15,17 @@ public class MenuConsole {
         System.out.println("0 - Finalizar Pedido");
     }
 
+    private void exibirAdicionaisLanche() {
+        System.out.println("\nAdicionais:");
+        System.out.println("1 - Cheddar");
+        System.out.println("2 - Bacon extra");
+        System.out.println("0 - Nenhum / terminar");
+    }
+
+
     public int lerOpcaoLanche() {
         exibirOpcoesLanches();
-        System.out.println("Digite a opção desejada: ");
+        System.out.print("Digite a opção desejada: ");
 
         int opcaoLanche = sc.nextInt();
         sc.nextLine();
@@ -25,8 +33,18 @@ public class MenuConsole {
         return opcaoLanche;
     }
 
+    public int lerAdicionaisLanche(){
+        exibirAdicionaisLanche();
+        System.out.print("Digite o adicional desejado: ");
+
+        int adicionalEscolhido = sc.nextInt();
+        sc.nextLine();
+
+        return adicionalEscolhido;
+    }
+
     public String lerNomeCliente() {
-        System.out.println("Digite seu nome:");
+        System.out.print("Digite seu nome: ");
         String nome = sc.nextLine();
 
         return nome;
@@ -38,7 +56,7 @@ public class MenuConsole {
         System.out.println("2 - Listar pedidos do dia");
         System.out.println("3 - Fechar restaurante");
         System.out.println("0 - Sair");
-        System.out.print("Digite a opção desejada: ");
+        System.out.print("\nDigite a opção desejada: ");
 
         int opcaoEscolhida = sc.nextInt();
         sc.nextLine();
@@ -86,5 +104,7 @@ public class MenuConsole {
             throw new RuntimeException(e);
         }
     }
+
+
 }
 

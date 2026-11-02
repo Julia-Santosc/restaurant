@@ -1,17 +1,44 @@
 package app;
 
+import cardapio.ComBaconExtra;
+import cardapio.ComCheddar;
+import cardapio.ItemCardapio;
 import pedido.Pedido;
 
 public class Main {
-    private static RestauranteFacade restaurante = new RestauranteFacade();
-    private static MenuConsole menu = new MenuConsole();
+    private static final RestauranteFacade restaurante = new RestauranteFacade();
+    private static final MenuConsole menu = new MenuConsole();
+
+    private static ItemCardapio incluirAdicionais(ItemCardapio lanche) {
+        int adicionalEscolhido;
+        ItemCardapio lanchePosAdicionais;
+
+        do {
+            adicionalEscolhido = menu.lerAdicionaisLanche();
+
+            lanchePosAdicionais = switch (adicionalEscolhido) {
+                case 0 -> lanche;
+                case 1 -> new ComCheddar(lanche);
+                case 2 -> new ComBaconExtra(lanche);
+                default -> throw new IllegalArgumentException("Adicional nao existe");
+            };
+        } while (adicionalEscolhido != 0);
+
+        return lanchePosAdicionais;
+    }
 
     private static void lerTodosItens(Pedido novoPedido) {
         int opcaoLanche;
 
         do {
             opcaoLanche = menu.lerOpcaoLanche();
-            restaurante.adicionarItemAoPedido(novoPedido, opcaoLanche);
+            ItemCardapio lanche = restaurante.criarLanche(opcaoLanche);
+
+            if (opcaoLanche != 0) {
+                lanche = incluirAdicionais(lanche);
+            }
+
+            restaurante.adicionarItemAoPedido(novoPedido, lanche);
         } while (opcaoLanche != 0);
     }
 
