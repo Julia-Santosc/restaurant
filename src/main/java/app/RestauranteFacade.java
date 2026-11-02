@@ -4,7 +4,6 @@ import cardapio.Lanche;
 import pedido.GerenciadorPedidos;
 import pedido.Pedido;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RestauranteFacade {
@@ -20,12 +19,14 @@ public class RestauranteFacade {
     }
 
     public void adicionarItemAoPedido(Pedido pedido, int numeroDoLanche) {
+        if (numeroDoLanche == 0) {
+            return;
+        };
 
         Lanche lanche = switch (numeroDoLanche) {
-            case 1 -> new Lanche("Hambúrguer", 18.00);
-            case 2 -> new Lanche("X-Salada", 25.00);
-            case 3 -> new Lanche("X-Frango", 27.00);
-            case 4 -> new Lanche("X-Bacon", 28.00);
+            case 1 -> new Lanche("X-Burguer", 16.00);
+            case 2 -> new Lanche("X-Salada", 18.00);
+            case 3 -> new Lanche("X-Bacon", 22.00);
             default -> throw new IllegalArgumentException("Item selecionado nao existe");
         };
 
