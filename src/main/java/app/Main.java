@@ -3,10 +3,19 @@ package app;
 import pedido.Pedido;
 
 public class Main {
-    public static void main(String[] args) {
-        RestauranteFacade restaurante = new RestauranteFacade();
-        MenuConsole menu = new MenuConsole();
+    private static RestauranteFacade restaurante = new RestauranteFacade();
+    private static MenuConsole menu = new MenuConsole();
 
+    private static void lerTodosItens(Pedido novoPedido) {
+        int opcaoLanche;
+
+        do {
+            opcaoLanche = menu.lerOpcaoLanche();
+            restaurante.adicionarItemAoPedido(novoPedido, opcaoLanche);
+        } while (opcaoLanche != 0);
+    }
+
+    public static void main(String[] args) {
         int opcaoMenuPrincipal;
 
         do {
@@ -15,13 +24,8 @@ public class Main {
                 case 1:
                     String nomeCliente = menu.lerNomeCliente();
                     Pedido novoPedido = restaurante.criarNovoPedido(nomeCliente);
-                    int opcaoLanche;
 
-                    do {
-                        opcaoLanche = menu.lerOpcaoLanche();
-                        restaurante.adicionarItemAoPedido(novoPedido, opcaoLanche);
-                    } while (opcaoLanche != 0);
-
+                    lerTodosItens(novoPedido);
                     menu.exibirPedido(novoPedido);
                     menu.irMenuPrincipal();
                     break;

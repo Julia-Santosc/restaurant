@@ -1,11 +1,9 @@
 package pedido;
 
 import cardapio.ItemCardapio;
-import cardapio.Lanche;
 import lombok.ToString;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @ToString
 public class Pedido {

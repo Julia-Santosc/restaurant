@@ -1,6 +1,5 @@
 package app;
 
-import cardapio.Lanche;
 import pedido.Pedido;
 
 import java.util.Collection;
