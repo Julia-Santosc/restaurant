@@ -23,6 +23,23 @@ public class MenuConsole {
         System.out.println("0 - Nenhum / terminar");
     }
 
+    private void exibirIngredientesLanche(){
+        System.out.println("\nIngredientes: ");
+        System.out.println("1 - Queijo");
+        System.out.println("2 - Alface");
+        System.out.println("3 - Tomate");
+        System.out.println("4 - Cebola");
+        System.out.println("0 - Sair");
+    }
+
+    public int lerIngredientesLanche(){
+        exibirIngredientesLanche();
+        System.out.println("Digite a opcao desejada: ");
+
+        int opcaoIngrediente = sc.nextInt();
+        sc.nextLine();
+                return opcaoIngrediente;
+    }
 
     public int lerOpcaoLanche() {
         exibirOpcoesLanches();

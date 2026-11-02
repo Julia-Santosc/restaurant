@@ -1,6 +1,7 @@
 package app;
 
 import cardapio.ItemCardapio;
+import cardapio.Lanche;
 import cardapio.LancheFactory;
 import pedido.GerenciadorPedidos;
 import pedido.Pedido;
@@ -18,7 +19,7 @@ public class RestauranteFacade {
         return gerenciadorPedidos.criarPedido(nomeCliente);
     }
 
-    public ItemCardapio criarLanche(int numeroDoLanche) {
+    public Lanche criarLanche(int numeroDoLanche) {
         return switch (numeroDoLanche) {
             case 1 -> LancheFactory.xBurguer();
             case 2 -> LancheFactory.xSalada();

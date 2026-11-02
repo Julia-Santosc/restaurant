@@ -3,6 +3,7 @@ package app;
 import cardapio.ComBaconExtra;
 import cardapio.ComCheddar;
 import cardapio.ItemCardapio;
+import cardapio.Lanche;
 import pedido.Pedido;
 
 public class Main {
@@ -25,13 +26,30 @@ public class Main {
         return lanche;
     }
 
+    private static Lanche retirarIngredientes(Lanche lanche) {
+        int ingredienteEscolhido = menu.lerIngredientesLanche();
+
+        while (ingredienteEscolhido != 0) {
+            switch (ingredienteEscolhido) {
+                case 1 -> lanche.setQueijo(false);
+                case 2 -> lanche.setAlface(false);
+                case 3 -> lanche.setTomate(false);
+                case 4 -> lanche.setCebola(false);
+                default -> throw new IllegalArgumentException("Ingrediente nao existe");
+            };
+            ingredienteEscolhido = menu.lerIngredientesLanche();
+        }
+        return lanche;
+    }
+
     private static void lerTodosItens(Pedido novoPedido) {
         int opcaoLanche = menu.lerOpcaoLanche();
 
         while (opcaoLanche != 0) {
-            ItemCardapio lanche = restaurante.criarLanche(opcaoLanche);
-            lanche = incluirAdicionais(lanche);
-            restaurante.adicionarItemAoPedido(novoPedido, lanche);
+            Lanche lanche = restaurante.criarLanche(opcaoLanche);
+            retirarIngredientes(lanche);
+            ItemCardapio lancheFinalizado = incluirAdicionais(lanche);
+            restaurante.adicionarItemAoPedido(novoPedido, lancheFinalizado);
 
             opcaoLanche = menu.lerOpcaoLanche();
         }
