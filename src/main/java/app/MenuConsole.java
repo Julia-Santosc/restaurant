@@ -113,6 +113,11 @@ public class MenuConsole {
         System.out.println("\n=== COMBINAÇÕES DO DIA ===");
         combinacoes.forEach(System.out::println);
 
+        HashSet<String> lanchesBase = restaurante.pegarLanchesBaseDoDia();
+
+        System.out.printf("%n=== LANCHES BASE DO DIA (%d) ===%n", lanchesBase.size());
+        lanchesBase.forEach(System.out::println);
+
         double totalVendido = restaurante.calcularTotalDoDia();
         double totalGorjetas = restaurante.calcularTotalGorjetas();
 

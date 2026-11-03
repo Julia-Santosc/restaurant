@@ -68,4 +68,16 @@ public class GerenciadorPedidos {
 
         return combinacoesDoDia;
     }
+
+    public HashSet<String> pegarLanchesBaseDoDia() {
+        HashSet<String> lanchesBaseDoDia = new HashSet<>();
+
+        for (Pedido pedido : pedidos.values()) {
+            for (ItemCardapio item : pedido.getItens()) {
+                lanchesBaseDoDia.add(item.getNomeBase());
+            }
+        }
+
+        return lanchesBaseDoDia;
+    }
 }

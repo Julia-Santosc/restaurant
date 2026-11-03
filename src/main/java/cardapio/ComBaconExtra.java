@@ -17,4 +17,9 @@ public class ComBaconExtra implements ItemCardapio {
     public double getPreco() {
         return lanche.getPreco() + 6.00;
     }
+
+    @Override
+    public String getNomeBase() {
+        return lanche.getNomeBase();
+    }
 }

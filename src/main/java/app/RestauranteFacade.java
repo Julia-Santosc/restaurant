@@ -77,4 +77,8 @@ public class RestauranteFacade {
     public HashSet<String> pegarCombinacoesDoDia() {
         return gerenciadorPedidos.pegarCombinacoesDoDia();
     }
+
+    public HashSet<String> pegarLanchesBaseDoDia() {
+        return gerenciadorPedidos.pegarLanchesBaseDoDia();
+    }
 }

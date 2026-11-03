@@ -29,6 +29,10 @@ public class Lanche implements ItemCardapio {
         this.preco = preco;
     }
 
+    public String getNomeBase() {
+        return nome;
+    }
+
     public String getDescricao() {
         String descricao = nome;
 
