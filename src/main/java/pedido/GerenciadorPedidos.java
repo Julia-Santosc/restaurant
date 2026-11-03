@@ -33,4 +33,12 @@ public class GerenciadorPedidos {
         }
         return totalDoDia;
     }
+
+    public void removerItemDoPedido(Pedido pedido, int indiceDoItemParaRemover) {
+        if (indiceDoItemParaRemover < 0 || indiceDoItemParaRemover >= pedido.getItens().size()) {
+            throw new IllegalArgumentException("O item não está presente no pedido.");
+        }
+
+        pedido.getItens().remove(indiceDoItemParaRemover);
+    }
 }
