@@ -2,7 +2,7 @@
 
 Sistema de console para um restaurante, feito no Projeto 1. Ele registra pedidos, deixa personalizar os lanches com adicionais ou sem ingredientes, modifica e cancela pedidos e faz o fechamento do dia.
 
-Vídeo: [assista aqui]((https://youtu.be/1iXjlYX6tsM))
+Vídeo: [assista aqui]([(https://youtu.be/1iXjlYX6tsM)])
 
 ## Como rodar
 
