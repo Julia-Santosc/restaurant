@@ -6,9 +6,10 @@ import java.util.ArrayList;
 
 public class Pedido {
 
-    private int idPedido;
+    private final int idPedido;
     private String nomeCliente;
-    private ArrayList<ItemCardapio> itens = new ArrayList<>();
+    private final ArrayList<ItemCardapio> itens = new ArrayList<>();
+    private double gorjeta = 0;
 
     public Pedido(int idPedido, String nomeCliente) {
         this.idPedido = idPedido;
@@ -45,5 +46,17 @@ public class Pedido {
 
     public String getNomeCliente(){
         return nomeCliente;
+    }
+
+    public double getGorjeta() {
+        return gorjeta;
+    }
+
+    public void setGorjeta(double gorjeta) {
+        if (gorjeta < 0) {
+            throw new IllegalArgumentException("A gorjeta não pode ser negativa.");
+        }
+
+        this.gorjeta = gorjeta;
     }
 }

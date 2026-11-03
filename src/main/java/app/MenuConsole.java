@@ -94,6 +94,7 @@ public class MenuConsole {
 
         System.out.println("     " + "-".repeat(largura + 13));
         System.out.printf(formatoTotal, "Total:", pedido.calcularTotal());
+        System.out.printf(formatoTotal, "Gorjeta:", pedido.getGorjeta());
     }
 
     public void exibirPedidosDoDia(Collection<Pedido> pedidosDoDia) {
@@ -112,8 +113,13 @@ public class MenuConsole {
         System.out.println("\n=== COMBINAÇÕES DO DIA ===");
         combinacoes.forEach(System.out::println);
 
-        System.out.println("\n=== TOTAL VENDIDO ===");
-        System.out.printf("    R$ %.2f %n", restaurante.calcularTotalDoDia());
+        double totalVendido = restaurante.calcularTotalDoDia();
+        double totalGorjetas = restaurante.calcularTotalGorjetas();
+
+        System.out.println("\n=== FECHAMENTO DO DIA ===");
+        System.out.printf("Total vendido:   R$ %8.2f%n", totalVendido);
+        System.out.printf("Total gorjetas:  R$ %8.2f%n", totalGorjetas);
+        System.out.printf("Total geral:     R$ %8.2f%n", totalVendido + totalGorjetas);
     }
 
     public void sairDoMenuConsole() {
@@ -136,7 +142,25 @@ public class MenuConsole {
         Pedido novoPedido = restaurante.criarNovoPedido(nomeCliente);
 
         adicionarItensAoPedido(restaurante, novoPedido);
+        registrarGorjeta(restaurante, novoPedido);
         exibirPedido(novoPedido);
+    }
+
+    private void registrarGorjeta(RestauranteFacade restaurante, Pedido pedido) {
+        System.out.print("\nTeve gorjeta? [S] Sim [N] Não: ");
+        if (!Helpers.lerTexto(scanner).trim().equalsIgnoreCase("s")) {
+            return;
+        }
+
+        while (true) {
+            System.out.print("Valor da gorjeta: R$ ");
+            try {
+                restaurante.registrarGorjeta(pedido, Helpers.lerDecimal(scanner));
+                return;
+            } catch (IllegalArgumentException exception) {
+                Helpers.exibirMensagemErro(exception.getMessage());
+            }
+        }
     }
 
     public void abrirSubMenuModificacao(RestauranteFacade restaurante, Pedido pedido) {

@@ -17,6 +17,18 @@ public final class Helpers {
         }
     }
 
+    public static double lerDecimal(Scanner scanner) {
+        while (true) {
+            String texto = scanner.nextLine().trim().replace(",", ".");
+
+            try {
+                return Double.parseDouble(texto);
+            } catch (NumberFormatException exception) {
+                System.out.println("Digite um valor válido, ex.: 5,50");
+            }
+        }
+    }
+
     public static String lerTexto(Scanner scanner) {
         while (true) {
             String texto = scanner.nextLine();

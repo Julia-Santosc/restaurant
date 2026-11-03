@@ -41,6 +41,14 @@ public class RestauranteFacade {
         return gerenciadorPedidos.calcularTotalDoDia();
     }
 
+    public double calcularTotalGorjetas() {
+        return gerenciadorPedidos.calcularTotalGorjetas();
+    }
+
+    public void registrarGorjeta(Pedido pedido, double gorjeta) {
+        pedido.setGorjeta(gorjeta);
+    }
+
     public Pedido buscarPedido(int idPedido) {
         return gerenciadorPedidos.buscarPedido(idPedido);
     }
