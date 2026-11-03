@@ -7,6 +7,7 @@ import cardapio.Lanche;
 import pedido.Pedido;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class MenuConsole {
@@ -134,9 +135,14 @@ public class MenuConsole {
         pedidosDoDia.forEach((Pedido pedido) -> exibirPedido(pedido));
     }
 
-    public void exibirFechamentoRestaurante(Double totalDosPedidos) {
+    public void exibirFechamentoRestaurante(RestauranteFacade restaurante) {
+        HashSet<String> combinacoes = restaurante.pegarCombinacoesDoDia();
+
+        System.out.println("\n=== COMBINAÇÕES DO DIA ===");
+        combinacoes.forEach(System.out::println);
+
         System.out.println("\n=== TOTAL VENDIDO ===");
-        System.out.printf("    R$ %.2f %n", totalDosPedidos);
+        System.out.printf("    R$ %.2f %n", restaurante.calcularTotalDoDia());
     }
 
     public void sairDoMenuConsole() {

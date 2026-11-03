@@ -11,7 +11,7 @@ public class Main {
             switch (opcaoMenuPrincipal) {
                 case 1 -> menu.registrarNovoPedido(restaurante);
                 case 2 -> menu.exibirPedidosDoDia(restaurante.listarPedidos());
-                case 3 -> menu.exibirFechamentoRestaurante(restaurante.calcularTotalDoDia());
+                case 3 -> menu.exibirFechamentoRestaurante(restaurante);
                 case 4 -> menu.buscarPedidoParaModificacao(restaurante);
                 default -> throw new IllegalArgumentException("Opção inválida.");
             }

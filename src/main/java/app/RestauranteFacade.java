@@ -7,6 +7,7 @@ import pedido.GerenciadorPedidos;
 import pedido.Pedido;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class RestauranteFacade {
     private final GerenciadorPedidos gerenciadorPedidos;
@@ -50,5 +51,9 @@ public class RestauranteFacade {
 
     public void cancelarPedido(int idPedido) {
         gerenciadorPedidos.cancelarPedido(idPedido);
+    }
+
+    public HashSet<String> pegarCombinacoesDoDia() {
+        return gerenciadorPedidos.pegarCombinacoesDoDia();
     }
 }

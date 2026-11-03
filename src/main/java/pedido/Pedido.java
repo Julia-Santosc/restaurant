@@ -1,11 +1,9 @@
 package pedido;
 
 import cardapio.ItemCardapio;
-import lombok.ToString;
 
 import java.util.ArrayList;
 
-@ToString
 public class Pedido {
 
     private int idPedido;

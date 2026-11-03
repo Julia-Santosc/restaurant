@@ -1,10 +1,10 @@
 package pedido;
 
-import lombok.ToString;
+import cardapio.ItemCardapio;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
-@ToString
 public class GerenciadorPedidos {
     private final HashMap<Integer, Pedido> pedidos = new HashMap<>();
     private int contadorPedidos = 1;
@@ -44,5 +44,17 @@ public class GerenciadorPedidos {
 
     public void cancelarPedido(int idPedido) {
         pedidos.remove(idPedido);
+    }
+
+    public HashSet<String> pegarCombinacoesDoDia() {
+        HashSet<String> combinacoesDoDia = new HashSet<>();
+
+        for (Pedido pedido : pedidos.values()) {
+            for (ItemCardapio item : pedido.getItens()) {
+                combinacoesDoDia.add(item.getDescricao());
+            }
+        }
+
+        return combinacoesDoDia;
     }
 }

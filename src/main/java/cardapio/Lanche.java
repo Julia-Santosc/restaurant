@@ -1,8 +1,5 @@
 package cardapio;
 
-import lombok.ToString;
-
-@ToString
 public class Lanche implements ItemCardapio {
     private String nome;
     private double preco;
@@ -89,6 +86,5 @@ public class Lanche implements ItemCardapio {
     public void setCebola(boolean cebola) {
         this.cebola = cebola;
     }
-
 }
 
