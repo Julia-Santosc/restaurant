@@ -47,4 +47,8 @@ public class RestauranteFacade {
     public void removerItemDoPedido(Pedido pedido, int indiceDoItemParaRemover) {
        gerenciadorPedidos.removerItemDoPedido(pedido, indiceDoItemParaRemover);
     }
+
+    public void cancelarPedido(int idPedido) {
+        gerenciadorPedidos.cancelarPedido(idPedido);
+    }
 }

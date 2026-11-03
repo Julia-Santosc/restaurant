@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 @ToString
 public class GerenciadorPedidos {
-    private HashMap<Integer, Pedido> pedidos = new HashMap<>();
+    private final HashMap<Integer, Pedido> pedidos = new HashMap<>();
     private int contadorPedidos = 1;
 
     public Pedido criarPedido(String nomeCliente){
@@ -40,5 +40,9 @@ public class GerenciadorPedidos {
         }
 
         pedido.getItens().remove(indiceDoItemParaRemover);
+    }
+
+    public void cancelarPedido(int idPedido) {
+        pedidos.remove(idPedido);
     }
 }

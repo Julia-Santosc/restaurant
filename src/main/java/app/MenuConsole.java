@@ -169,12 +169,10 @@ public class MenuConsole {
             switch (opcaoEscolhida) {
                 case 1 -> adicionarItensAoPedido(restaurante, pedido);
                 case 2 -> removerItemDoPedido(restaurante, pedido);
-                case 3 -> System.out.println(3);
+                case 3 -> cancelarPedido(restaurante, pedido.getIdPedido());
                 default -> throw new IllegalArgumentException("Opção inválida.");
             }
 
-            System.out.println("\n=== PEDIDO ATUALIZADO ===");
-            exibirPedido(pedido);
             opcaoEscolhida = lerSubMenuDeModificacao();
         }
     }
@@ -210,17 +208,20 @@ public class MenuConsole {
         }
     }
 
-    private void adicionarItensAoPedido(RestauranteFacade restaurante, Pedido novoPedido) {
+    private void adicionarItensAoPedido(RestauranteFacade restaurante, Pedido pedido) {
         int opcaoLanche = lerOpcaoLanche();
 
         while (opcaoLanche != 0) {
             Lanche lanche = restaurante.criarLanche(opcaoLanche);
             retirarIngredientes(lanche);
             ItemCardapio lancheFinalizado = incluirAdicionais(lanche);
-            restaurante.adicionarItemAoPedido(novoPedido, lancheFinalizado);
+            restaurante.adicionarItemAoPedido(pedido, lancheFinalizado);
 
             opcaoLanche = lerOpcaoLanche();
         }
+
+        System.out.println("\n=== PEDIDO ATUALIZADO ===");
+        exibirPedido(pedido);
     }
 
     private void exibirItensParaRemocao(Pedido pedido) {
@@ -239,6 +240,9 @@ public class MenuConsole {
         sc.nextLine();
 
         restauranteFacade.removerItemDoPedido(pedido, numeroItem - 1);
+
+        System.out.println("\n=== PEDIDO ATUALIZADO ===");
+        exibirPedido(pedido);
     }
 
     public void buscarPedidoParaModificacao(RestauranteFacade restaurante) {
@@ -254,5 +258,10 @@ public class MenuConsole {
 
         exibirPedido(pedido);
         abrirSubMenuModificacao(restaurante, pedido);
+    }
+
+    private void cancelarPedido(RestauranteFacade restaurante, int idPedido) {
+        restaurante.cancelarPedido(idPedido);
+        System.out.println("\n=== PEDIDO CANCELADO ===");
     }
 }
