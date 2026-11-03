@@ -3,6 +3,8 @@ package app;
 import cardapio.ItemCardapio;
 import cardapio.Lanche;
 import cardapio.LancheFactory;
+import financeiro.Caixa;
+import financeiro.Transacao;
 import pedido.GerenciadorPedidos;
 import pedido.Pedido;
 
@@ -11,6 +13,7 @@ import java.util.HashSet;
 
 public class RestauranteFacade {
     private final GerenciadorPedidos gerenciadorPedidos;
+    private final Caixa caixa = Caixa.getInstancia();
 
     public RestauranteFacade() {
         this.gerenciadorPedidos = new GerenciadorPedidos();
@@ -37,12 +40,21 @@ public class RestauranteFacade {
         return gerenciadorPedidos.getPedidos().values();
     }
 
+    public void fecharPedido(Pedido pedido) {
+        if (gerenciadorPedidos.buscarPedido(pedido.getIdPedido()) == null) {
+            return;
+        }
+
+        Transacao transacao = new Transacao(pedido.getIdPedido(), pedido.calcularTotal(), pedido.getGorjeta());
+        caixa.registrarTransacao(transacao);
+    }
+
     public double calcularTotalDoDia() {
-        return gerenciadorPedidos.calcularTotalDoDia();
+        return caixa.calcularTotalVendido();
     }
 
     public double calcularTotalGorjetas() {
-        return gerenciadorPedidos.calcularTotalGorjetas();
+        return caixa.calcularTotalGorjetas();
     }
 
     public void registrarGorjeta(Pedido pedido, double gorjeta) {
@@ -59,6 +71,7 @@ public class RestauranteFacade {
 
     public void cancelarPedido(int idPedido) {
         gerenciadorPedidos.cancelarPedido(idPedido);
+        caixa.removerTransacao(idPedido);
     }
 
     public HashSet<String> pegarCombinacoesDoDia() {

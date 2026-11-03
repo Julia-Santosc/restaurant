@@ -143,6 +143,7 @@ public class MenuConsole {
 
         adicionarItensAoPedido(restaurante, novoPedido);
         registrarGorjeta(restaurante, novoPedido);
+        restaurante.fecharPedido(novoPedido);
         exibirPedido(novoPedido);
     }
 
@@ -176,6 +177,8 @@ public class MenuConsole {
 
             opcaoEscolhida = lerSubMenuDeModificacao();
         }
+
+        restaurante.fecharPedido(pedido);
     }
 
     private ItemCardapio incluirAdicionais(ItemCardapio lanche) {
