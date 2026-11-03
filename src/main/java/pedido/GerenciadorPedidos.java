@@ -2,6 +2,7 @@ package pedido;
 
 import cardapio.ItemCardapio;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -51,7 +52,9 @@ public class GerenciadorPedidos {
 
         for (Pedido pedido : pedidos.values()) {
             for (ItemCardapio item : pedido.getItens()) {
-                combinacoesDoDia.add(item.getDescricao());
+                String[] partes = item.getDescricao().split(" \\+ ");
+                Arrays.sort(partes, 1, partes.length);
+                combinacoesDoDia.add(String.join(" + ", partes));
             }
         }
 
