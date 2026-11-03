@@ -168,7 +168,7 @@ public class MenuConsole {
         while (opcaoEscolhida != 0) {
             switch (opcaoEscolhida) {
                 case 1 -> adicionarItensAoPedido(restaurante, pedido);
-                case 2 -> System.out.println(2);
+                case 2 -> removerItemDoPedido(restaurante, pedido);
                 case 3 -> System.out.println(3);
                 default -> throw new IllegalArgumentException("Opção inválida.");
             }
@@ -221,6 +221,24 @@ public class MenuConsole {
 
             opcaoLanche = lerOpcaoLanche();
         }
+    }
+
+    private void exibirItensParaRemocao(Pedido pedido) {
+        System.out.printf("%n--- PEDIDO #%d - %s ---%n", pedido.getIdPedido(), pedido.getNomeCliente());
+
+        for (int indice = 0; indice < pedido.getItens().size(); indice++) {
+            ItemCardapio itemCardapio = pedido.getItens().get(indice);
+            System.out.printf("Item #%d - %-45s R$ %6.2f%n", indice + 1, itemCardapio.getDescricao(), itemCardapio.getPreco());
+        }
+    }
+
+    private void removerItemDoPedido(RestauranteFacade restauranteFacade, Pedido pedido) {
+        exibirItensParaRemocao(pedido);
+        System.out.print("Digite o número do item que deseja remover: ");
+        int numeroItem = sc.nextInt();
+        sc.nextLine();
+
+        restauranteFacade.removerItemDoPedido(pedido, numeroItem - 1);
     }
 
     public void buscarPedidoParaModificacao(RestauranteFacade restaurante) {
