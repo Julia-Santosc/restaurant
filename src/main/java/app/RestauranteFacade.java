@@ -12,11 +12,11 @@ import java.util.HashSet;
 public class RestauranteFacade {
     private final GerenciadorPedidos gerenciadorPedidos;
 
-    public RestauranteFacade(){
+    public RestauranteFacade() {
         this.gerenciadorPedidos = new GerenciadorPedidos();
     }
 
-    public Pedido criarNovoPedido(String nomeCliente){
+    public Pedido criarNovoPedido(String nomeCliente) {
         return gerenciadorPedidos.criarPedido(nomeCliente);
     }
 
@@ -41,12 +41,12 @@ public class RestauranteFacade {
         return gerenciadorPedidos.calcularTotalDoDia();
     }
 
-    public Pedido buscarPedido(int idPedido){
+    public Pedido buscarPedido(int idPedido) {
         return gerenciadorPedidos.buscarPedido(idPedido);
     }
 
     public void removerItemDoPedido(Pedido pedido, int indiceDoItemParaRemover) {
-       gerenciadorPedidos.removerItemDoPedido(pedido, indiceDoItemParaRemover);
+        gerenciadorPedidos.removerItemDoPedido(pedido, indiceDoItemParaRemover);
     }
 
     public void cancelarPedido(int idPedido) {

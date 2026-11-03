@@ -13,12 +13,13 @@ public class Main {
                 case 2 -> menu.exibirPedidosDoDia(restaurante.listarPedidos());
                 case 3 -> menu.exibirFechamentoRestaurante(restaurante);
                 case 4 -> menu.buscarPedidoParaModificacao(restaurante);
-                default -> throw new IllegalArgumentException("Opção inválida.");
+                default -> menu.avisoOpcaoInvalida();
             }
 
             menu.irParaMenuPrincipal();
             opcaoMenuPrincipal = menu.lerOpcaoMenuPrincipal();
-        };
+        }
+        ;
 
         menu.sairDoMenuConsole();
     }

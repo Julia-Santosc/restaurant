@@ -5,15 +5,16 @@ import cardapio.ComCheddar;
 import cardapio.ItemCardapio;
 import cardapio.Lanche;
 import pedido.Pedido;
+import util.Helpers;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public class MenuConsole {
-    private final Scanner sc = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    private void exibirMenuPrincipal() {
+    public int lerOpcaoMenuPrincipal() {
         System.out.println("=== MENU PRINCIPAL ===");
         System.out.println("1 - Registrar novo pedido");
         System.out.println("2 - Listar pedidos do dia");
@@ -21,18 +22,22 @@ public class MenuConsole {
         System.out.println("4 - Modificar pedido");
         System.out.println("0 - Sair");
         System.out.print("\nDigite a opção desejada: ");
+
+        return Helpers.lerNumero(scanner);
     }
 
-    private void exibirOpcoesLanches() {
+    public int lerOpcaoLanche() {
         System.out.println("\n=== CARDÁPIO ===");
         System.out.println("1 - X-Burguer (R$ 16,00)");
         System.out.println("2 - X-Salada (R$ 18,00)");
         System.out.println("3 - X-Bacon (R$ 22,00)");
         System.out.println("0 - Finalizar Pedido");
         System.out.print("Digite a opcao desejada: ");
+
+        return Helpers.lerNumero(scanner);
     }
 
-    private void exibirIngredientesLanche() {
+    public int lerIngredientesLanche() {
         System.out.println("\nIngredientes: ");
         System.out.println("1 - Queijo");
         System.out.println("2 - Alface");
@@ -40,69 +45,35 @@ public class MenuConsole {
         System.out.println("4 - Cebola");
         System.out.println("0 - Sair");
         System.out.print("Digite a opção desejada: ");
+
+        return Helpers.lerNumero(scanner);
     }
 
-    private void exibirAdicionaisLanche() {
+    public int lerAdicionaisLanche() {
         System.out.println("\nAdicionais:");
         System.out.println("1 - Cheddar");
         System.out.println("2 - Bacon extra");
         System.out.println("0 - Nenhum / terminar");
         System.out.print("Digite o adicional desejado: ");
+
+        return Helpers.lerNumero(scanner);
     }
 
-    private void exibirSubMenuDeModificacao(){
+    public int lerSubMenuDeModificacao() {
         System.out.println("\n=== MODIFICAR PEDIDO ===");
         System.out.println("1 - Acrescentar item");
         System.out.println("2 - Remover item");
         System.out.println("3 - Cancelar pedido");
         System.out.println("0 - Voltar");
         System.out.print("Digite a opção desejada: ");
-    }
 
-    public int lerOpcaoMenuPrincipal() {
-        exibirMenuPrincipal();
-        int opcaoEscolhida = sc.nextInt();
-        sc.nextLine();
-
-        return opcaoEscolhida;
-    }
-
-    public int lerOpcaoLanche() {
-        exibirOpcoesLanches();
-        int opcaoLanche = sc.nextInt();
-        sc.nextLine();
-
-        return opcaoLanche;
-    }
-
-    public int lerIngredientesLanche() {
-        exibirIngredientesLanche();
-        int opcaoIngrediente = sc.nextInt();
-        sc.nextLine();
-
-        return opcaoIngrediente;
-    }
-
-    public int lerAdicionaisLanche() {
-        exibirAdicionaisLanche();
-        int adicionalEscolhido = sc.nextInt();
-        sc.nextLine();
-
-        return adicionalEscolhido;
-    }
-
-    public int lerSubMenuDeModificacao(){
-        exibirSubMenuDeModificacao();
-        int modificacaoEscolhida = sc.nextInt();
-        sc.nextLine();
-
-        return modificacaoEscolhida;
+        return Helpers.lerNumero(scanner);
     }
 
     public String lerNomeCliente() {
         System.out.print("Digite seu nome: ");
 
-        return sc.nextLine();
+        return Helpers.lerTexto(scanner);
     }
 
     public void exibirPedido(Pedido pedido) {
@@ -132,7 +103,7 @@ public class MenuConsole {
         }
 
         System.out.println("\n=== PEDIDOS DO DIA ===");
-        pedidosDoDia.forEach((Pedido pedido) -> exibirPedido(pedido));
+        pedidosDoDia.forEach(this::exibirPedido);
     }
 
     public void exibirFechamentoRestaurante(RestauranteFacade restaurante) {
@@ -147,7 +118,7 @@ public class MenuConsole {
 
     public void sairDoMenuConsole() {
         System.out.println("\n=== SAINDO DO SISTEMA ===");
-        sc.close();
+        scanner.close();
     }
 
     public void irParaMenuPrincipal() {
@@ -155,8 +126,8 @@ public class MenuConsole {
 
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (InterruptedException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
@@ -176,7 +147,7 @@ public class MenuConsole {
                 case 1 -> adicionarItensAoPedido(restaurante, pedido);
                 case 2 -> removerItemDoPedido(restaurante, pedido);
                 case 3 -> cancelarPedido(restaurante, pedido.getIdPedido());
-                default -> throw new IllegalArgumentException("Opção inválida.");
+                default -> Helpers.exibirMensagemErro("Opção inválida.");
             }
 
             opcaoEscolhida = lerSubMenuDeModificacao();
@@ -190,7 +161,10 @@ public class MenuConsole {
             lanche = switch (adicionalEscolhido) {
                 case 1 -> new ComCheddar(lanche);
                 case 2 -> new ComBaconExtra(lanche);
-                default -> throw new IllegalArgumentException("Adicional nao existe");
+                default -> {
+                    Helpers.exibirMensagemErro("Adicional nao existe");
+                    yield lanche;
+                }
             };
 
             adicionalEscolhido = lerAdicionaisLanche();
@@ -208,8 +182,9 @@ public class MenuConsole {
                 case 2 -> lanche.setAlface(false);
                 case 3 -> lanche.setTomate(false);
                 case 4 -> lanche.setCebola(false);
-                default -> throw new IllegalArgumentException("Ingrediente nao existe");
-            };
+                default -> Helpers.exibirMensagemErro("Ingrediente nao existe");
+            }
+
             ingredienteEscolhido = lerIngredientesLanche();
         }
     }
@@ -218,7 +193,16 @@ public class MenuConsole {
         int opcaoLanche = lerOpcaoLanche();
 
         while (opcaoLanche != 0) {
-            Lanche lanche = restaurante.criarLanche(opcaoLanche);
+            Lanche lanche;
+
+            try {
+                lanche = restaurante.criarLanche(opcaoLanche);
+            } catch (Exception exception) {
+                Helpers.exibirMensagemErro(exception.getMessage());
+                opcaoLanche = lerOpcaoLanche();
+                continue;
+            }
+
             retirarIngredientes(lanche);
             ItemCardapio lancheFinalizado = incluirAdicionais(lanche);
             restaurante.adicionarItemAoPedido(pedido, lancheFinalizado);
@@ -242,10 +226,14 @@ public class MenuConsole {
     private void removerItemDoPedido(RestauranteFacade restauranteFacade, Pedido pedido) {
         exibirItensParaRemocao(pedido);
         System.out.print("Digite o número do item que deseja remover: ");
-        int numeroItem = sc.nextInt();
-        sc.nextLine();
+        int numeroItem = Helpers.lerNumero(scanner);
 
-        restauranteFacade.removerItemDoPedido(pedido, numeroItem - 1);
+        try {
+            restauranteFacade.removerItemDoPedido(pedido, numeroItem - 1);
+        } catch (IllegalArgumentException exception) {
+            Helpers.exibirMensagemErro(exception.getMessage());
+            return;
+        }
 
         System.out.println("\n=== PEDIDO ATUALIZADO ===");
         exibirPedido(pedido);
@@ -253,8 +241,7 @@ public class MenuConsole {
 
     public void buscarPedidoParaModificacao(RestauranteFacade restaurante) {
         System.out.print("Digite o número do pedido que deseja modificar: ");
-        int idPedido = sc.nextInt();
-        sc.nextLine();
+        int idPedido = Helpers.lerNumero(scanner);
 
         Pedido pedido = restaurante.buscarPedido(idPedido);
         if (pedido == null) {
@@ -269,5 +256,9 @@ public class MenuConsole {
     private void cancelarPedido(RestauranteFacade restaurante, int idPedido) {
         restaurante.cancelarPedido(idPedido);
         System.out.println("\n=== PEDIDO CANCELADO ===");
+    }
+
+    public void avisoOpcaoInvalida() {
+        Helpers.exibirMensagemErro("Opção inválida. Tente novamente.");
     }
 }
